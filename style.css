@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Moderne, donkere gradient achtergrond */
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); 
+    color: white;
+    overflow: hidden;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.status {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    height: 35px;
+    font-weight: 400;
+    opacity: 0.9;
+    transition: color 0.3s ease;
+}
+
+/* Glassmorphism bordeffect */
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 110px);
+    grid-template-rows: repeat(3, 110px);
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 25px;
+    border-radius: 25px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), border 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cell {
+    width: 110px;
+    height: 110px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Hover effect voor cellen */
+.cell:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Neon kleuren en animaties voor X en O */
+.cell.x {
+    color: #00f0ff;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cell.o {
+    color: #ff0055;
+    text-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+    50% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* De Start Opnieuw knop met hover glow */
+.reset-btn {
+    margin-top: 50px;
+    padding: 14px 40px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #ff0055, #ff7b00);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 0, 85, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.reset-btn:hover {
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 0, 85, 0.5);
+    background: linear-gradient(45deg, #ff0055, #ff9900);
+}
+
+.reset-btn:active {
+    transform: scale(0.95);
+}
+
+/* Simipele pulse animatie als iemand wint */
+.win-animation {
+    animation: pulseWin 1.5s infinite alternate;
+}
+
+@keyframes pulseWin {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
