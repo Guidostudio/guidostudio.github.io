@@ -1,103 +1,45 @@
-const board = document.getElementById('board');
-const cells = document.querySelectorAll('.cell');
-const statusText = document.getElementById('status');
-const resetBtn = document.getElementById('reset-btn');
+// Voeg class toe aan navbar bij scrollen voor een glassmorphism effect dat duidelijker wordt
+const navbar = document.querySelector('.navbar');
 
-let gameActive = true;
-let currentPlayer = 'X';
-let gameState = ['', '', '', '', '', '', '', '', ''];
-
-// Alle mogelijke winnende combinaties
-const winningConditions = [
-    [0, 1, 2], // horizontale rijen
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6], // verticale rijen
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8], // diagonale lijnen
-    [2, 4, 6]
-];
-
-// Tekst updaten op basis van wie aan de beurt is
-function updateStatus() {
-    if (gameActive) {
-        statusText.innerText = `Speler ${currentPlayer} is aan de beurt`;
-        statusText.style.color = currentPlayer === 'X' ? '#00f0ff' : '#ff0055';
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(15, 17, 21, 0.95)';
+        navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+    } else {
+        navbar.style.background = 'rgba(15, 17, 21, 0.8)';
+        navbar.style.boxShadow = 'none';
     }
-}
+});
 
-// Wordt aangeroepen wanneer we op een vakje klikken
-function handleCellClick(e) {
-    const clickedCell = e.target;
-    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
+// Intersection Observer om elementen in te faden wanneer je ernaar scrollt
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-    // Niet klikken op een al ingevuld vakje, of als de game al klaar is
-    if (gameState[clickedCellIndex] !== '' || !gameActive) {
-        return;
-    }
-
-    // Update de state en de UI
-    gameState[clickedCellIndex] = currentPlayer;
-    clickedCell.innerHTML = currentPlayer;
-    clickedCell.classList.add(currentPlayer.toLowerCase());
-
-    checkResult();
-}
-
-// Controleren of er iemand heeft gewonnen of gelijk is gespeeld
-function checkResult() {
-    let roundWon = false;
-
-    for (let i = 0; i < winningConditions.length; i++) {
-        const [a, b, c] = winningConditions[i];
-        if (gameState[a] !== '' && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
-            roundWon = true;
-            break;
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
         }
-    }
-
-    if (roundWon) {
-        statusText.innerHTML = `🏆 Speler <strong>${currentPlayer}</strong> heeft gewonnen!`;
-        statusText.style.color = currentPlayer === 'X' ? '#00f0ff' : '#ff0055';
-        board.classList.add('win-animation');
-        gameActive = false;
-        return;
-    }
-
-    // Kijken of het speelveld vol is zonder winnaar (Gelijkspel)
-    let roundDraw = !gameState.includes('');
-    if (roundDraw) {
-        statusText.innerText = 'Het is gelijkspel! 🤝';
-        statusText.style.color = 'white';
-        gameActive = false;
-        return;
-    }
-
-    // Wissel van speler
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    updateStatus();
-}
-
-// Spel resetten
-function restartGame() {
-    gameActive = true;
-    currentPlayer = 'X';
-    gameState = ['', '', '', '', '', '', '', '', ''];
-    updateStatus();
-
-    board.classList.remove('win-animation');
-
-    cells.forEach(cell => {
-        cell.innerHTML = '';
-        cell.classList.remove('x');
-        cell.classList.remove('o');
     });
-}
+}, observerOptions);
 
-// Event listeners toevoegen
-cells.forEach(cell => cell.addEventListener('click', handleCellClick));
-resetBtn.addEventListener('click', restartGame);
+// Selecteer alle project kaarten en animatie instellen
+const projectCards = document.querySelectorAll('.project-card');
+projectCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = `all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) ${index * 0.1}s`;
+    observer.observe(card);
+});
 
-// Zet de originele status kleur en tekst op de juiste (speler X starts)
-updateStatus();
+const sectionHeadings = document.querySelectorAll('section h2, .about-text');
+sectionHeadings.forEach((heading) => {
+    heading.style.opacity = '0';
+    heading.style.transform = 'translateY(20px)';
+    heading.style.transition = 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)';
+    observer.observe(heading);
+});
