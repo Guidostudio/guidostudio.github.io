@@ -6,7 +6,7 @@
     --primary-color: #8b5cf6;
     --secondary-color: #3b82f6;
     --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    --border-color: rgba(255,255,255,0.1);
+    --border-color: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -113,6 +113,26 @@ body {
     margin-right: auto;
 }
 
+.hero-avatar {
+    margin-bottom: 1rem;
+}
+
+.hero-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+
 .background-shape {
     position: absolute;
     top: 50%;
@@ -166,13 +186,65 @@ h2 {
 }
 
 /* About */
-.about .about-text {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
+.about {
+    background-color: #f3f4f6;
+    color: #1a1d24;
 }
+
+.about h2 {
+    text-align: left;
+    color: #1a1d24;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.about p {
+    color: #4b5563;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    line-height: 1.8;
+}
+
+.about-container {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-image {
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.about-content {
+    flex: 1;
+}
+
+.testimonial {
+    margin-top: 2rem;
+    padding-left: 2rem;
+    border-left: 4px solid var(--primary-color);
+    font-style: italic;
+    color: #6b7280;
+}
+
+.testimonial cite {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+    font-style: normal;
+    color: #4b5563;
+}
+
 
 /* Projects */
 .project-grid {
@@ -191,7 +263,7 @@ h2 {
 
 .project-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     border-color: rgba(139, 92, 246, 0.5);
 }
 
@@ -251,6 +323,7 @@ footer {
     .nav-links {
         display: none;
     }
+
     .hero h1 {
         font-size: 3rem;
     }
